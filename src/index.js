@@ -923,7 +923,13 @@ function anime(params = {}) {
       instance.direction = direction !== 'normal' ? 'normal' : 'reverse';
     }
     instance.reversed = !instance.reversed;
-    children.forEach(child => child.reversed = instance.reversed);
+    children.forEach(child => {
+      const direction = child.direction;
+      if (direction !== 'alternate') {
+          child.direction = direction !== 'normal' ? 'normal' : 'reverse';
+      }
+      child.reversed = instance.reversed;
+    });
   }
 
   function adjustTime(time) {
@@ -1093,7 +1099,7 @@ function anime(params = {}) {
     childrenLength = children.length;
     for (let i = childrenLength; i--;) instance.children[i].reset();
     if (instance.reversed && instance.loop !== true || (direction === 'alternate' && instance.loop === 1)) instance.remaining++;
-    setAnimationsProgress(0);
+    setAnimationsProgress(adjustTime(0));
   }
 
   // Set Value helper
