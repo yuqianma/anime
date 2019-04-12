@@ -13,14 +13,16 @@ function getScrollTop() {
 function scrollTo(selector, offset, cb) {
   var offset = offset || 0;
   var el = document.querySelector(selector);
-  var scrollAnim = anime({
-    targets: {scroll: demosEl.scrollTop},
-    scroll: el.offsetTop - offset,
-    duration: 500,
-    easing: 'easeInOutQuart',
-    update: function(a) { demosEl.scrollTop = a.animations[0].currentValue; },
-    complete: function() { if (cb) cb(); }
-  });
+  demosEl.scrollTop = el.offsetTop - offset;
+  if (cb) cb();
+  // var scrollAnim = anime({
+  //   targets: {scroll: demosEl.scrollTop},
+  //   scroll: el.offsetTop - offset,
+  //   duration: 500,
+  //   easing: 'easeInOutQuart',
+  //   update: function(a) { demosEl.scrollTop = a.animations[0].currentValue; },
+  //   complete: function() { if (cb) cb(); }
+  // });
 }
 
 function parseJS(demoCode) {
@@ -58,25 +60,25 @@ function toggleSectionLink(ulEl) {
   var ulLiEls = ulEl.querySelectorAll('.li');
   for (var i = 0; i < ulEls.length; i++) ulEls[i].classList.remove('active');
   ulEl.classList.add('active');
-  anime.remove(ulEls);
-  anime({
-    targets: '.navigation ul:not(.active)',
-    height: 30,
-    duration: 400,
-    easing: 'easeOutQuart'
-  });
-  anime({
-    targets: ulEl,
-    height: function(el) {
-      var height = 0;
-      var childNodes = el.childNodes;
-      for (var i = 0; i < childNodes.length; i++) height += childNodes[i].offsetHeight;
-      return height;
-    },
-    duration: 600,
-    delay: 400,
-    easing: 'easeInOutQuart'
-  });
+  // anime.remove(ulEls);
+  // anime({
+  //   targets: '.navigation ul:not(.active)',
+  //   height: 30,
+  //   duration: 400,
+  //   easing: 'easeOutQuart'
+  // });
+  // anime({
+  //   targets: ulEl,
+  //   height: function(el) {
+  //     var height = 0;
+  //     var childNodes = el.childNodes;
+  //     for (var i = 0; i < childNodes.length; i++) height += childNodes[i].offsetHeight;
+  //     return height;
+  //   },
+  //   duration: 600,
+  //   delay: 400,
+  //   easing: 'easeInOutQuart'
+  // });
 }
 
 function resetDemo() {
@@ -187,6 +189,13 @@ function createLinksSection(articleEl) {
   liEl.appendChild(sectionLinkEl);
   ulEl.appendChild(liEl);
   ulEl.classList.add(colorClass);
+  setTimeout(function() {
+    var el = ulEl;
+    var height = 0;
+    var childNodes = el.childNodes;
+    for (var i = 0; i < childNodes.length; i++) height += childNodes[i].offsetHeight;
+    el.style.height = height + 'px';
+  });
   return ulEl;
 }
 

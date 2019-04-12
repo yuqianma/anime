@@ -26,7 +26,11 @@
   <link href="assets/css/anime-theme.css" rel="stylesheet">
   <link href="assets/css/documentation.css" rel="stylesheet">
 
-  <script src="../lib/anime.min.js"></script>
+  <!--<script src="../lib/anime.min.js"></script>-->
+  <script async="false" type="module">
+    import anime from '../src/index.js';
+    window.anime = anime;
+  </script>
 </head>
 <body>
   <div class="content">
